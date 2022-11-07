@@ -1,0 +1,34 @@
+public class SprintEducation {
+    
+public static void assignPriorQualifications(List<String> priorQual){
+    
+    String priorQualifications;
+    String enrolmentProgression;
+    
+    List<Contact> studentList = [SELECT Id, Name, Prior_Qualification__c, Enrolment_Progression__c FROM Contact];
+    List<Contact> newStudentList = new List<Contact>();
+    
+    for (Contact sl:studentList){
+        Integer randomNumber = Integer.valueOf(Math.random()*priorQual.size());
+        priorQualifications = priorQual[randomNumber];
+        
+        if (priorQualifications == 'Below Tertiary') {
+            enrolmentProgression = 'Advanced';
+            System.debug('Name' + sl.Name + 'assigned' + enrolmentProgression);
+        }
+        else if (priorQualifications == 'Tertiary Graduate') {
+            enrolmentProgression = 'Ultimate';
+            System.debug('Name' + sl.Name + 'assigned' + enrolmentProgression);
+        }
+        else if (priorQualifications == 'Tertiary Post-Graduate') {
+            enrolmentProgression = 'Extra';
+            System.debug('Name' + sl.Name + 'assigned' + enrolmentProgression);
+        }
+        
+        sl.Prior_Qualification__c = priorQualifications;
+        sl.Enrolment_Progression__c = enrolmentProgression;
+        newStudentList.add(sl);
+    }
+    update newStudentList;
+}
+}
